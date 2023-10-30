@@ -1,5 +1,80 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+
+import { ref, inject } from 'vue';
+import axios from "axios";
+import { useRouter } from 'vue-router'
+
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+
+
+const $toast = useToast();
+const user = inject('user');
+
+console.log(user)
+
+
+function checkConnection() {
+  if (user.id) {
+    axios.get('http://localhost:3000/api/user/' + user.value.id)
+      .then((response) => {
+        if (response.data.id) {
+          return true
+        }
+        else {
+          return false
+        }
+      })
+  }
+  else {
+    return false
+  }
+}
+
+if (checkConnection()) {
+  try {
+    axios.get('http://localhost:3000/api/user/' + user.value.id)
+      .then((response) => {
+        if (response.data.id) {
+          user.value = response.data
+          $toast.open({
+            message: 'Données utilisateur récupérées',
+            type: 'success',
+            duration: 3000,
+          });
+        }
+        else {
+          $toast.open({
+            message: 'Données utilisateur introuvables',
+            type: 'error',
+            duration: 3000,
+          });
+
+        }
+      })
+      .catch((error) => {
+
+        $toast.open({
+          message: 'Connexion échouée : ' + error,
+          type: 'error',
+          duration: 3000,
+        });
+      })
+  }
+  catch (e) {
+    $toast.open({
+      message: 'Connexion échouée : ' + e,
+      type: 'error',
+      duration: 3000,
+    });
+
+  }
+} else {
+  user.value = undefined
+  localStorage.removeItem('user')
+}
+
+
 
 const login_modal = ref(false);
 
@@ -116,13 +191,30 @@ function saveColors() {
             Aucune couleur sauvegardée
           </h2>
           <div>
-            <div class="flex flex-row items-center justify-center mt-4 gap-2">
-              Me connecter pour récupérer mes couleurs sauvegardées
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                <RouterLink to="/auth">
-                  Connexion
-                </RouterLink>
-              </button>
+            <div v-if="user === undefined">
+              <div class="flex flex-row items-center justify-center mt-4 gap-2">
+                Me connecter pour récupérer mes couleurs sauvegardées
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                  <RouterLink to="/auth">
+                    Connexion
+                  </RouterLink>
+                </button>
+              </div>
+            </div>
+            <div v-else>
+              <div class="flex flex-row items-center justify-center mt-4 gap-2">
+                <h4>
+                  Mes palettes sauvegardées
+                </h4>
+                <div v-for="palette in user.savedColors" class="flex flex-row items-center justify-center mt-4 gap-2">
+                  <div
+                    class="h-full w-1/6 font-bold flex flex-col items-center justify-center text-white flex-wrap text-white font-bold py-2 px-4"
+                    :style="{ backgroundColor: '#' + palette, cursor: 'pointer' }">
+                    #{{ palette }}
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
@@ -130,7 +222,7 @@ function saveColors() {
 
       <div v-if="login_modal" id="default-modal" tabindex="-1"
         class=" fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0
-                                                                                  h-[calc(100%-1rem)] max-h-full absolute ">
+                                                                                                                                                                                                                                                                                                                                                                    h-[calc(100%-1rem)] max-h-full absolute ">
         <div class=" relative w-full max-w-2xl max-h-full">
           <!-- Modal content -->
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
