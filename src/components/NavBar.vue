@@ -6,9 +6,9 @@ const props = defineProps<{
 </script>
 
 <template>
-    <nav v-if="logged" class="bg-white border-gray-200 dark:bg-gray-900 border-b dark:border-gray-800">
+    <nav v-if="!logged" class="bg-white border-gray-200 dark:bg-gray-900 border-b dark:border-gray-800">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center w-1/4">
+            <a href="/" class="flex items-center w-1/4">
                 <img src="../assets/svg/logo-no-background.svg" class="w-1/2 mr-3" alt="PaletteColor Logo" />
             </a>
             <button data-collapse-toggle="navbar-default" type="button"
@@ -40,7 +40,7 @@ const props = defineProps<{
     </nav>
     <nav v-else class="bg-white border-gray-200 dark:bg-gray-900 border-b dark:border-gray-800">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center w-1/4">
+            <a href="/" class="flex items-center w-1/4">
                 <img src="../assets/svg/logo-no-background.svg" class="w-1/2 mr-3" alt="Flowbite Logo" />
             </a>
             <button data-collapse-toggle="navbar-default" type="button"

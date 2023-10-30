@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   purge: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
-  darkMode: "class", // or 'media' or 'class'
+  darkMode: "media", // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -18,6 +18,19 @@ module.exports = {
           900: "#1e3a8a",
           950: "#172554",
         },
+        dark: {
+          50: "#0F0F0F",
+          100: "#232D3F",
+          200: "#eff6ff",
+          300: "#9fb3c8",
+          400: "#829ab1",
+          500: "#627d98",
+          600: "#486581",
+          700: "#334e68",
+          800: "#243b53",
+          900: "#102a43",
+          950: "#061a2b",
+        }
       },
     },
     fontFamily: {

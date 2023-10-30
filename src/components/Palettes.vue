@@ -6,7 +6,7 @@ const props = defineProps({
     savedColors: Array
 });
 
-
+const user = ref(JSON.parse(props.user));
 function saveColors() {
     login_modal.value = true;
 }
@@ -18,10 +18,10 @@ const login_modal = ref(false);
     <div class="center w-3/4  h-screen">
         <div v-if="savedColors.length > 0" class="flex flex-col items-center justify-center mt-4 gap-2 h-full">
             <div class="flex flex-row items-center justify-center mt-4 gap-2">
-                <h2 class="text-2xl font-bold mt-4 mb-4 mx-3">
+                <h2 class="text-2xl font-bold mt-4 mb-4 mx-3 dark:text-dark-200">
                     Couleurs sauvegardées ({{ savedColors.length }} sur 6) </h2>
                 <button @click="saveColors()"
-                    class="bg-green-500 hover:bg-green-700 text-white gap:2 font-bold py-2 px-4 rounded-full flex flex-row items-center justify-center">
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full dark:bg-green-900  dark:hover:bg-green-950 flex flex-row items-center justify-center">
                     Sauvegarder la palette
                     <img src="../assets/svg/save.svg" alt="" class="w-8 h-8" style="filter: invert(1);">
                 </button>
@@ -44,7 +44,7 @@ const login_modal = ref(false);
                 Aucune couleur sauvegardée
             </h2>
             <div>
-                <div v-if="user === undefined">
+                <div v-if="user === null">
                     <div class="flex flex-row items-center justify-center mt-4 gap-2">
                         Me connecter pour récupérer mes couleurs sauvegardées
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
@@ -55,16 +55,21 @@ const login_modal = ref(false);
                     </div>
                 </div>
                 <div v-else>
-                    <div class="flex flex-row items-center justify-center mt-4 gap-2">
-                        <h4>
+                    <h4>
                             Mes palettes sauvegardées
                         </h4>
-                        <div v-for="palette in user.savedColors"
+                    <div class="flex flex-row items-center justify-center mt-4 gap-2">
+                       
+                        <div v-for="palette in user.palettesSaved"
                             class="flex flex-row items-center justify-center mt-4 gap-2">
-                            <div class="h-full w-1/6 font-bold flex flex-col items-center justify-center text-white flex-wrap text-white font-bold py-2 px-4"
-                                :style="{ backgroundColor: '#' + palette, cursor: 'pointer' }">
-                                #{{ palette }}
+                            <div class="flex flex-row items-center justify-center mt-4 gap-2">
+                                <div v-for="color in palette.colors"
+                                    class="h-full w-1/6 font-bold flex flex-col items-center justify-center text-white flex-wrap text-white font-bold py-2 px-4"
+                                    :style="{ backgroundColor: '#' + color, cursor: 'pointer' }">
+                                    #{{ color }}
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
 

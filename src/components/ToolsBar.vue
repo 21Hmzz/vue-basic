@@ -50,7 +50,7 @@ function generatePalette() {
 
 <template>
     <div class="left w-1/4  h-full flex flex-col items-center ">
-        <h4 class="text-2xl font-bold mt-4 mb-4 w-full text-center">
+        <h4 class="text-2xl font-bold mt-4 mb-4 w-full text-center dark:text-dark-200">
             Cliquez sur générer pour obtenir un code couleur héxadécimal aléatoire
         </h4>
         <div class="flex flex-col items-center justify-center mt-4 gap-2">
@@ -64,29 +64,29 @@ function generatePalette() {
             </div>
             <div v-if="colors !== ''">
                 <button @click="addColor(colors)"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full dark:bg-green-900  dark:hover:bg-green-950">
                     Sauvegarder la couleur
                 </button>
             </div>
             <hr class="w-96" />
             <div class="others flex flex-col items-center justify-center">
-                <h4 class="text-2xl font-bold mt-4 mb-4 w-full text-center ">
+                <h4 class="text-2xl font-bold mt-4 mb-4 w-full text-center dark:text-dark-200 ">
                     Entrez un code couleur héxadécimal
                 </h4>
                 <input v-model="colors" type="text" class="w-96 h-10 rounded-full border border-gray-300 px-4 mb-4"
                     placeholder="Entrez un code couleur héxadécimal" />
                 <button @click="addColor(colors)"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full dark:bg-green-900  dark:hover:bg-green-950">
                     Sauvegarder la couleur
                 </button>
 
                 <hr class="w-96 mt-4" />
 
-                <h4 class="text-2xl font-bold mt-4 mb-4 w-full text-center ">
+                <h4 class="text-2xl font-bold mt-4 mb-4 w-full text-center  dark:text-dark-200">
                     Génerer une palette de 6 couleurs
                 </h4>
-                <button @click="generatePalette(colors)"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
+                <button @click="generatePalette()"
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full dark:bg-green-900  dark:hover:bg-green-950">
                     Génerer la palette
                 </button>
 

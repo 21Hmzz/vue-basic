@@ -10,7 +10,8 @@ import Palettes from '@/components/Palettes.vue';
 
 
 const $toast = useToast();
-const savedColors = ref(['39050d']);
+const savedColors = ref([]);
+const user = ref(sessionStorage.getItem('user'));
 
 function updateSavedColors(savedColorsOld: any) {
   console.log(savedColors);
@@ -21,9 +22,9 @@ function updateSavedColors(savedColorsOld: any) {
 
 <template>
   <main>
-    <div class="flex flex-row items-center justify-center min-w-100 h-screen  w-screen ">
+    <div class="flex flex-row items-center justify-center min-w-100 h-screen  w-screen dark:bg-dark-50">
       <ToolsBar :saved-colors="savedColors" @saved-colors="updateSavedColors" />
-      <Palettes :saved-colors="savedColors" />
+      <Palettes :saved-colors="savedColors" :user="user" />
     </div>
 
 

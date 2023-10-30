@@ -14,14 +14,14 @@
           <div class="space-y-4 md:space-y-6" action="#">
             <div>
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre email</label>
-              <input type="email" name="email" id="email"
+              <input v-model="email" type="email" name="email" id="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="nom@email.com" required>
             </div>
             <div>
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de
                 passe</label>
-              <input type="password" name="password" id="password" placeholder="••••••••"
+              <input v-model="password" type="password" name="password" id="password" placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required>
             </div>
@@ -31,7 +31,7 @@
                 Mot de passe oublié ?
               </a>
             </div>
-            <button type="submit" @click="tryLogin()"
+            <button type="submit" @click="connexionUtilisateur"
               class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Connexion
             </button>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -46,70 +46,24 @@
     </div>
   </section>
 </template>
-<script setup lang="ts">
-import { RouterLink } from 'vue-router'
-import { onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from "axios";
-import { useToast } from 'vue-toast-notification';
-import 'vue-toast-notification/dist/theme-sugar.css';
+<script lang="ts">
+export default {
+  data() {
+    return {
+      email: '',
+      password: '',
+    };
+  },
+  methods: {
+    async connexionUtilisateur() {
+      await this.$store.dispatch('connexionUtilisateur', {
+        email: this.email,
+        password: this.password,
+      });
 
-
-const $toast = useToast();
-const router = useRouter();
-
-const tryLogin = () => {
-  const email = document.getElementById('email') as HTMLInputElement
-  const password = document.getElementById('password') as HTMLInputElement
-  const data = {
-    email: email.value,
-    password: password.value
-  }
-  try {
-    axios.post('http://localhost:3000/api/user/login', data)
-      .then((response) => {
-        if (response.data.id) {
-          $toast.open({
-            message: 'Connexion réussie',
-            type: 'success',
-            duration: 3000,
-          });
-          localStorage.setItem('user', JSON.stringify(response.data))
-          router.push({ path: '/' })
-        }
-        else {
-          $toast.open({
-            message: 'Connexion échouée',
-            type: 'error',
-            duration: 3000,
-          });
-
-        }
-      })
-      .catch((error) => {
-        $toast.open({
-          message: 'Connexion échouée : ' + error,
-          type: 'error',
-          duration: 3000,
-        });
-      })
-  }
-  catch (e) {
-    $toast.open({
-      message: 'Connexion échouée : ' + e,
-      type: 'error',
-      duration: 3000,
-    });
-
-  }
-
-
-
-}
-
-
-
-
-
-
+      console.log('estConnecte après la connexion :', this.$store.getters.estConnecte);
+    },
+  },
+};
 </script>
+
