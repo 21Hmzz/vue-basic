@@ -6,8 +6,9 @@ import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 import ToolsBar from '@/components/ToolsBar.vue';
 import Palettes from '@/components/Palettes.vue';
+import axios from 'axios';
 
-
+const emit = defineEmits(['refreshUserToApp']);
 
 const $toast = useToast();
 const savedColors = ref([]);
@@ -17,14 +18,21 @@ function updateSavedColors(savedColorsOld: any) {
   console.log(savedColors);
   savedColors.value = savedColorsOld;
 }
+function refreshUser() {
+
+  emit('refreshUserToApp');
+
+
+}
 
 </script>
 
 <template>
   <main>
-    <div class="flex flex-row items-center justify-center min-w-100 h-screen  w-screen dark:bg-dark-50">
+    <div
+      class="flex lg:flex-row lg:items-center lg:justify-center lg:min-w-100 h-screen  lg:w-screen dark:bg-dark-50 flex-col">
       <ToolsBar :saved-colors="savedColors" @saved-colors="updateSavedColors" />
-      <Palettes :saved-colors="savedColors" :user="user" />
+      <Palettes :saved-colors="savedColors" :user="user" @refreshUser="refreshUser" />
     </div>
 
 

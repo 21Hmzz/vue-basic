@@ -49,7 +49,9 @@ function generatePalette() {
 </script>
 
 <template>
-    <div class="left w-1/4  h-full flex flex-col items-center ">
+    <div
+        class="left lg:w-1/4  lg:h-full flex flex-col items-center pb-3 mt-3 mx-3 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+
         <h4 class="text-2xl font-bold mt-4 mb-4 w-full text-center dark:text-dark-200">
             Cliquez sur générer pour obtenir un code couleur héxadécimal aléatoire
         </h4>

@@ -1,6 +1,14 @@
 @import "./base.css";
 #app {
-  background-color: #fff;
   height: 100vh;
-  overflow-y: hidden;
+}
+@media (prefers-color-scheme: dark) {
+  a {
+    color: #eff6ff !important;
+  }
+}
+
+.router-link-active.router-link-exact-active {
+  color: #409eff !important;
+  font-weight: 500;
 }

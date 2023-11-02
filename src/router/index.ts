@@ -13,6 +13,30 @@ const router = createRouter({
       name: "auth",
       component: () => import("../views/Auth.vue"),
     },
+    {
+      path: "/compte",
+      name: "compte",
+      component: () => import("../views/Compte.vue"),
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem("token")) {
+          next();
+        } else {
+          next("/auth");
+        }
+      },
+      children: [
+        {
+          path: "/parametres",
+          name: "parametres",
+          component: () => import("../views/Params.vue"),
+        },
+      ],
+    },
+    // {
+    //   path: "/:pathMatch(.*)*",
+    //   name: "not-found",
+    //   component: () => import("../views/NotFound.vue"),
+    // },
   ],
 });
 

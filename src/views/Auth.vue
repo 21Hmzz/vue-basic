@@ -48,6 +48,7 @@
 </template>
 <script lang="ts">
 export default {
+  emits: ['connexionUtilisateur'],
   data() {
     return {
       email: '',
@@ -60,8 +61,7 @@ export default {
         email: this.email,
         password: this.password,
       });
-
-      console.log('estConnecte après la connexion :', this.$store.getters.estConnecte);
+      this.$emit('connexionUtilisateur', this.$store.getters.estConnecte);
     },
   },
 };
